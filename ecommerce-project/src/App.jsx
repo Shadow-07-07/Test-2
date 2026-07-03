@@ -5,7 +5,7 @@ import { HomePage } from './pages/Home/HomePage';
 import { CheckoutPage } from './pages/Checkout/CheckoutPage';
 import { OrdersPage } from './pages/Orders/OrdersPage';
 import { TrackingPage } from './pages/TrackingPage';
-import { NotFoundPage } from './pages/NotFoundPage';
+import { NotFoundPage } from './pages/NotFound/NotFoundPage';
 import './App.css'
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
       <Route index element={<HomePage cart={cart} />} />
       <Route path="checkout" element={<CheckoutPage cart={cart} />} />
       <Route path="orders" element={<OrdersPage cart={cart} />} />
-      <Route path="tracking" element={<TrackingPage />} />
+      <Route path="tracking/:orderId/:productId" element={<TrackingPage cart={cart} />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes> 
   );
