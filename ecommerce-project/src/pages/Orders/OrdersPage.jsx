@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Header } from '../../components/Header';
 import { OrdersGrid } from './OrdersGrid';
 
-export function OrdersPage({ cart }) {
+export function OrdersPage({ cart, loadCart }) {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     axios.get('/api/orders?expand=products').then((response) => {
@@ -21,7 +21,7 @@ export function OrdersPage({ cart }) {
       <div className="orders-page">
         <div className="page-title">Your Orders</div>
 
-          <OrdersGrid orders={orders} />
+          <OrdersGrid orders={orders} loadCart={loadCart}/>
 
       </div>
     </>
