@@ -10,6 +10,7 @@ describe('Product', () => {
 
   let product;
   let loadCart;
+  let user;
   beforeEach(() => {
     product = {
       id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -23,6 +24,7 @@ describe('Product', () => {
       keywords: ["socks", "sports", "apparel"]
     };
     loadCart = vi.fn();
+    user = userEvent.setup();
   });
 
   it('displays the product details correctly', () => {
@@ -54,7 +56,6 @@ describe('Product', () => {
 
     render(<Product product={product} loadCart={loadCart} />);
 
-    const user = userEvent.setup();
     const addToCartButton = screen.getByTestId('add-to-cart-button');
     await user.click(addToCartButton);
 
@@ -66,5 +67,28 @@ describe('Product', () => {
       }
     );
     expect(loadCart).toHaveBeenCalled();
-  })
-}) 
+  });
+
+  it('select a quantity', async () => {
+    render(<Product product={product} loadCart={loadCart} />);
+ 
+    const quantitySelector = screen.getByTestId('product-quantity-selector');
+
+    expect(quantitySelector).toHaveValue('1');
+
+    await user.selectOptions(quantitySelector, '3');
+    expect(quantitySelector).toHaveValue('3');
+
+    const addToCartButton = screen.getByTestId('add-to-cart-button');
+    await user.click(addToCartButton);
+
+    expect(axios.post).toHaveBeenCalledWith(
+      '/api/cart-items',
+      {
+        productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+        quantity : 3
+      }
+    );
+    expect(loadCart).toHaveBeenCalled();
+  });
+})
