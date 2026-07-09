@@ -1,11 +1,13 @@
 {
-  "name": "ecommerce-project-ts",
+  "name": "ecommerce-project",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "run-s build:frontend build:backend",
+    "build:frontend": "vite build",
+    "build:backend": "npm --prefix ../ecommerce-backend run zip",
     "lint": "eslint .",
     "preview": "vite preview"
   },
