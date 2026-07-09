@@ -1,12 +1,20 @@
 import './Header.css';
 import { NavLink, useNavigate, useSearchParams } from 'react-router';
-import { useState } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import CartIcon from '../assets/images/icons/cart-icon.png';
 import LogoWhite from '../assets/images/logo-white.png';
 import SearchIcon from '../assets/images/icons/search-icon.png';
 import MobileLogoWhite from '../assets/images/mobile-logo-white.png';
 
-export function Header({ cart }) {
+type HeaderProps = {
+  cart: {
+    productId: string,
+    quantity: number,
+    deliveryOptionId: string
+  }[];
+}
+
+export function Header({ cart }: HeaderProps) {
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -14,7 +22,7 @@ export function Header({ cart }) {
   const searchText = searchParams.get('search');
   const [search, setSearch] = useState(searchText || '');
 
-  const updateSearchInput = (event) => {
+  const updateSearchInput = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   }
   const searchProduct = () => {
